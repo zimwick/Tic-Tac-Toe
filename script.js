@@ -23,19 +23,31 @@ function createPlayer(name) {
 
 const gameFlow = (function () {
   let gameRunning = true;
+  let playerXTurn;
   const goesFirst = Math.floor(Math.random() * 2);
-  const player1 = createPlayer("Jay");
-  const player2 = createPlayer("Tayvia");
+  const playerX = createPlayer("Jay");
+  const playerO = createPlayer("Tayvia");
 
   if (goesFirst === 0) {
-    //player1 goes first
+    console.log("player X goes first");
+    playerXTurn = true;
+  } else {
+    console.log("player O goes first");
+    playerXTurn = false;
   }
 
   while (gameRunning) {
-    //perform move here first
-
-    //then check winner
-    checkWinner();
+    if (playerXTurn === true) {
+      let userInput = prompt("tile");
+      gameBoard.setTile(Number(userInput), "X");
+      checkWinner();
+    } else if (playerXTurn === false) {
+      let userInput = prompt("tile");
+      gameBoard.setTile(Number(userInput), "O");
+      checkWinner();
+    }
+    //changing player turn
+    playerXTurn = !playerXTurn;
   }
 
   function checkWinner() {
@@ -60,6 +72,11 @@ const gameFlow = (function () {
         tile[win[1]] !== "" &&
         tile[win[2]] !== ""
       ) {
+        if (tile[win[0]] === "X") {
+          console.log("Player X Wins!");
+        } else if (tile[win[0]] === "O") {
+          console.log("Player O Wins!");
+        }
         gameRunning = false;
       }
     });
