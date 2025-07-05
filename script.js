@@ -8,7 +8,7 @@ const gameBoard = (function () {
   };
 
   //array position 0 bottom left position 8 top right
-  const tiles = ["X", "O", "X", "O", "X", "X", "O", "X", "O"];
+  const tiles = ["", "", "", "", "", "", "", "", ""];
 
   return {
     setTile,
@@ -21,7 +21,7 @@ function createPlayer(name) {
   return { name };
 }
 
-const gameFlow = (function () {
+const gameController = (function () {
   let turns = 0;
   let gameRunning = true;
   let playerXTurn;
@@ -87,6 +87,10 @@ const gameFlow = (function () {
   }
 })();
 
+const displayController = (function () {
+  const tiles = document.querySelectorAll(".tile-button");
+  console.log(tiles[0].id);
+})();
 // each player is X or O
 // have a function that randomly decides which player goes first
 // first player chooses 0-8 of an array that array slot goes from "" to either "X" or "O" depending on player
