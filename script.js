@@ -8,7 +8,7 @@ const gameBoard = (function () {
   };
 
   //array position 0 bottom left position 8 top right
-  const tiles = ["", "", "", "", "", "", "", "", ""];
+  const tiles = ["X", "O", "X", "O", "X", "X", "O", "X", "O"];
 
   return {
     setTile,
@@ -22,6 +22,7 @@ function createPlayer(name) {
 }
 
 const gameFlow = (function () {
+  let turns = 0;
   let gameRunning = true;
   let playerXTurn;
   const goesFirst = Math.floor(Math.random() * 2);
@@ -37,13 +38,12 @@ const gameFlow = (function () {
   }
 
   while (gameRunning) {
+    turns += 1;
     if (playerXTurn === true) {
-      let userInput = prompt("tile");
-      gameBoard.setTile(Number(userInput), "X");
+      //take input here
       checkWinner();
     } else if (playerXTurn === false) {
-      let userInput = prompt("tile");
-      gameBoard.setTile(Number(userInput), "O");
+      //take input here
       checkWinner();
     }
     //changing player turn
@@ -80,6 +80,10 @@ const gameFlow = (function () {
         gameRunning = false;
       }
     });
+    if (turns === 9) {
+      console.log("its a tie!");
+      gameRunning = false;
+    }
   }
 })();
 
