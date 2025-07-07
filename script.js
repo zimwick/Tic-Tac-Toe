@@ -29,6 +29,14 @@ const gameController = (function () {
   const playerX = createPlayer("Jay");
   const playerO = createPlayer("Tayvia");
 
+  if (goesFirst === 0) {
+    console.log("player X goes first");
+    playerXTurn = true;
+  } else {
+    console.log("player O goes first");
+    playerXTurn = false;
+  }
+
   function getPlayerTurn() {
     return playerXTurn ? "X" : "O";
   }
@@ -45,17 +53,10 @@ const gameController = (function () {
     }
   }
 
-  if (goesFirst === 0) {
-    console.log("player X goes first");
-    playerXTurn = true;
-  } else {
-    console.log("player O goes first");
-    playerXTurn = false;
-  }
-
   function checkWinner() {
     const tile = gameBoard.getTiles();
 
+    //all possible wins
     const wins = [
       [0, 1, 2],
       [3, 4, 5],
@@ -96,8 +97,11 @@ const displayController = (function () {
   const tiles = document.querySelectorAll(".tile-button");
   tiles.forEach((tile) =>
     tile.addEventListener("click", function () {
-      tile.textContent = gameController.getPlayerTurn();
-      gameController.playerTurn(tile.id);
+      //prevent multiple clicks on same tile
+      if (tile.textContent === "") {
+        tile.textContent = gameController.getPlayerTurn();
+        gameController.playerTurn(tile.id);
+      }
     })
   );
 })();
