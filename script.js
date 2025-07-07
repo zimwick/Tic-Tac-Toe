@@ -29,25 +29,28 @@ const gameController = (function () {
   const playerX = createPlayer("Jay");
   const playerO = createPlayer("Tayvia");
 
+  function getPlayerTurn() {
+    return playerXTurn ? "X" : "O";
+  }
+
+  function playerTurn(tileId) {
+    if (gameRunning) {
+      gameBoard.setTile(tileId, playerXTurn ? "X" : "O");
+      console.log(gameBoard.getTiles());
+      checkWinner();
+      if (gameRunning) {
+        playerXTurn = !playerXTurn;
+        turns += 1;
+      }
+    }
+  }
+
   if (goesFirst === 0) {
     console.log("player X goes first");
     playerXTurn = true;
   } else {
     console.log("player O goes first");
     playerXTurn = false;
-  }
-
-  while (gameRunning) {
-    turns += 1;
-    if (playerXTurn === true) {
-      //take input here
-      checkWinner();
-    } else if (playerXTurn === false) {
-      //take input here
-      checkWinner();
-    }
-    //changing player turn
-    playerXTurn = !playerXTurn;
   }
 
   function checkWinner() {
@@ -72,27 +75,29 @@ const gameController = (function () {
         tile[win[1]] !== "" &&
         tile[win[2]] !== ""
       ) {
-        if (tile[win[0]] === "X") {
+        if (playerXTurn) {
           console.log("Player X Wins!");
-        } else if (tile[win[0]] === "O") {
+        } else {
           console.log("Player O Wins!");
         }
         gameRunning = false;
       }
     });
-    if (turns === 9) {
+    //check for tie
+    if (turns === 8 && gameRunning != false) {
       console.log("its a tie!");
       gameRunning = false;
     }
   }
+  return { playerTurn, getPlayerTurn };
 })();
 
 const displayController = (function () {
   const tiles = document.querySelectorAll(".tile-button");
-  console.log(tiles[0].id);
+  tiles.forEach((tile) =>
+    tile.addEventListener("click", function () {
+      tile.textContent = gameController.getPlayerTurn();
+      gameController.playerTurn(tile.id);
+    })
+  );
 })();
-// each player is X or O
-// have a function that randomly decides which player goes first
-// first player chooses 0-8 of an array that array slot goes from "" to either "X" or "O" depending on player
-// function needs to be in place that checks every turn if there is a win or a tie
-// possible wins: horizontal: 012,345,678, vertical: 036,147,258 diagnol: 048 246 - if no win its a tie
