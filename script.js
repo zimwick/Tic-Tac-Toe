@@ -37,23 +37,20 @@ const gameController = (function () {
     playerXTurn = false;
   }
 
-  function getPlayerTurn() {
-    return playerXTurn ? "X" : "O";
-  }
-
   function playerTurn(tileId) {
     if (gameRunning) {
       gameBoard.setTile(tileId, playerXTurn ? "X" : "O");
-      console.log(gameBoard.getTiles());
-      checkWinner();
+      checkIfWinner();
       if (gameRunning) {
         playerXTurn = !playerXTurn;
         turns += 1;
       }
     }
+    //get updated tile
+    return gameBoard.getTiles()[tileId];
   }
 
-  function checkWinner() {
+  function checkIfWinner() {
     const tile = gameBoard.getTiles();
 
     //all possible wins
@@ -90,7 +87,7 @@ const gameController = (function () {
       gameRunning = false;
     }
   }
-  return { playerTurn, getPlayerTurn };
+  return { playerTurn, playerTurn };
 })();
 
 const displayController = (function () {
@@ -99,8 +96,7 @@ const displayController = (function () {
     tile.addEventListener("click", function () {
       //prevent multiple clicks on same tile
       if (tile.textContent === "") {
-        tile.textContent = gameController.getPlayerTurn();
-        gameController.playerTurn(tile.id);
+        tile.textContent = gameController.playerTurn(tile.id);
       }
     })
   );
