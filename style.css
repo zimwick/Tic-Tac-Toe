@@ -4,14 +4,51 @@
   padding: 0;
 }
 
+:root {
+  font-family: "Roboto", sans-serif;
+  background-color: #eee;
+}
+
+button {
+  font-family: "Roboto", sans-serif;
+}
+
+header {
+  font-family: "Barriecito", sans-serif;
+  text-align: center;
+  margin: 40px 0;
+  color: #1e1a1d;
+  font-size: 24px;
+}
+
+.form-container,
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
 .game-board {
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   width: 400px;
   height: 400px;
+  gap: 1px;
+  background-color: #eee;
+  border: 1px solid #eee;
 }
 
 .tile-button {
-  font-size: 60px;
+  font-size: 86px;
+  font-weight: 400;
+  border: none;
+  background-color: #8c705f;
+  color: #e5f2c9;
+  transition: all 0.3s;
+}
+.tile-button:hover {
+  background-color: #7e6556;
 }

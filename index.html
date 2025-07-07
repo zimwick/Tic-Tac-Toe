@@ -3,13 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barriecito&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css" />
     <title>Tic Tac Toe</title>
   </head>
   <body>
-    <header></header>
+    <header>
+      <h1>Lets Play Tic Tac Toe</h1>
+    </header>
     <main>
+      <div class="form-container">
+        <form action="" class="hidden">
+          <div>
+            <div class="form-playerx-name">
+              <label for="playerX">Player X's Name:</label>
+              <input
+                type="text"
+                name="playerX"
+                id="playerX"
+                placeholder="e.g. Michael"
+              />
+            </div>
+            <div class="form-playero-name">
+              <label for="playerO">Player O's Name:</label>
+              <input
+                type="text"
+                name="playerO"
+                id="playerO"
+                placeholder="e.g. Scott"
+              />
+            </div>
+          </div>
+          <div class="form-btn-container">
+            <button id="form-submit" class="btn" type="submit">Start</button>
+          </div>
+        </form>
+      </div>
       <div class="game-board">
         <button id="6" class="tile-button" type="button"></button>
         <button id="7" class="tile-button" type="button"></button>

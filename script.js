@@ -24,20 +24,29 @@ function createPlayer(name) {
 const gameController = (function () {
   let turns = 0;
   let gameRunning = true;
-  let playerXTurn;
-  const goesFirst = Math.floor(Math.random() * 2);
-  const playerX = createPlayer("Jay");
-  const playerO = createPlayer("Tayvia");
+  let playerXTurn = null;
+  let playerX;
+  let playerO;
 
-  if (goesFirst === 0) {
-    console.log("player X goes first");
-    playerXTurn = true;
-  } else {
-    console.log("player O goes first");
-    playerXTurn = false;
+  function getPlayerXTurn() {
+    return playerXTurn;
   }
 
-  function playerTurn(tileId) {
+  function playerSetup(playerXname, playerOname) {
+    playerX = createPlayer(playerXname);
+    playerO = createPlayer(playerOname);
+    //randomly see who goes first
+    const goesFirst = Math.floor(Math.random() * 2);
+    if (goesFirst === 0) {
+      console.log(playerX.name, "goes first");
+      playerXTurn = true;
+    } else {
+      console.log(playerO.name, "goes first");
+      playerXTurn = false;
+    }
+  }
+
+  function executeTurn(tileId) {
     if (gameRunning) {
       gameBoard.setTile(tileId, playerXTurn ? "X" : "O");
       checkIfWinner();
@@ -46,7 +55,7 @@ const gameController = (function () {
         turns += 1;
       }
     }
-    //get updated tile
+    //return updated tile
     return gameBoard.getTiles()[tileId];
   }
 
@@ -74,9 +83,9 @@ const gameController = (function () {
         tile[win[2]] !== ""
       ) {
         if (playerXTurn) {
-          console.log("Player X Wins!");
+          console.log(playerX.name, "Wins!");
         } else {
-          console.log("Player O Wins!");
+          console.log(playerO.name, "Wins!");
         }
         gameRunning = false;
       }
@@ -87,16 +96,37 @@ const gameController = (function () {
       gameRunning = false;
     }
   }
-  return { playerTurn, playerTurn };
+  return { executeTurn, executeTurn, playerSetup, getPlayerXTurn };
 })();
 
 const displayController = (function () {
   const tiles = document.querySelectorAll(".tile-button");
+  const startBtn = document.getElementById("form-submit");
+  const playerXname = document.getElementById("playerX");
+  const playerOname = document.getElementById("playerO");
+
+  startBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (!playerXname.value || !playerOname.value) {
+      alert("Please enter 2 player names");
+    } else {
+      gameController.playerSetup(playerXname.value, playerOname.value);
+    }
+  });
+
   tiles.forEach((tile) =>
     tile.addEventListener("click", function () {
-      //prevent multiple clicks on same tile
-      if (tile.textContent === "") {
-        tile.textContent = gameController.playerTurn(tile.id);
+      if (
+        !playerXname.value ||
+        !playerOname.value ||
+        gameController.getPlayerXTurn() === null
+      ) {
+        alert("Please enter 2 player names");
+      } else {
+        //prevent multiple clicks on same tile
+        if (tile.textContent === "") {
+          tile.textContent = gameController.executeTurn(tile.id);
+        }
       }
     })
   );
