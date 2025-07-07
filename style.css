@@ -22,11 +22,41 @@ header {
 }
 
 .form-container,
-form {
+form,
+form div div {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 14px;
+}
+
+.form-container {
+  margin-bottom: 15px;
+}
+
+label {
+  color: #7f534b;
+  font-size: 30px;
+  font-weight: 600;
+}
+input {
+  height: 30px;
+  width: 80px;
+}
+
+#form-submit {
+  width: 80px;
+  height: 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #352f33;
+  color: #e5f2c9;
+  transition: all 0.3s;
+}
+#form-submit:hover {
+  cursor: pointer;
+  background-color: #1e1a1d;
 }
 
 .game-board {
@@ -51,4 +81,5 @@ form {
 }
 .tile-button:hover {
   background-color: #7e6556;
+  cursor: pointer;
 }
